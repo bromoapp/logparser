@@ -71,7 +71,8 @@ When this application runs, this application will execute a db schema file which
     )
     ENGINE=InnoDB;
 
-    CREATE PROCEDURE IF NOT EXISTS `daily_passed_threshold_ips`(IN `in_date` VARCHAR(50), IN `in_threshold` INT)
+    CREATE PROCEDURE IF NOT EXISTS `daily_passed_threshold_ips`(
+    IN `in_date` VARCHAR(50), IN `in_threshold` INT)
     BEGIN
     	SELECT src.ip, src.hits FROM (
     		SELECT DISTINCT(a.ip) AS 'ip', COUNT(*) AS 'hits' FROM tbl_logs AS a 
@@ -79,7 +80,8 @@ When this application runs, this application will execute a db schema file which
     	) AS src WHERE src.hits >= in_threshold;
     END;
 
-    CREATE PROCEDURE IF NOT EXISTS `hourly_passed_threshold_ips`(IN `in_time` VARCHAR(50), IN `in_threshold` INT)
+    CREATE PROCEDURE IF NOT EXISTS `hourly_passed_threshold_ips`(
+    IN `in_time` VARCHAR(50), IN `in_threshold` INT)
     BEGIN
     	SELECT src.ip, src.hits FROM (
     		SELECT DISTINCT(a.ip) AS 'ip', COUNT(*) AS 'hits' FROM tbl_logs AS a 
