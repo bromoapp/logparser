@@ -1,5 +1,3 @@
-
-
 # Log Parser
 *NOTE: This project is created and tested in Windows 10 environment.*
 
@@ -90,3 +88,46 @@ When this application runs, this application will execute a db schema file which
     	) AS src WHERE src.hits >= in_threshold;
     END;
 
+## SQL Queries
+*NOTEL All below tests are performed against sample data that loaded from access.log file*
+
+### 1. Query IPs that exceed daily threshold
+Date = 2017-01-01 00:00:00; Duration = daily; Threshold = 500. 
+Query that calls store procedure:
+
+    CALL daily_passed_threshold_ips('2017-01-01 00:00:00', 500);
+Result:
+|ip|hits  |
+|--|--|
+|192.168.102.136|513|
+|192.168.129.191|747|
+|192.168.143.177|729|
+|192.168.162.248|623|
+|192.168.185.164|528|
+|192.168.199.209|640|
+|192.168.203.111|601|
+|192.168.206.141|533|
+|192.168.219.10|623|
+|192.168.31.26|591|
+|192.168.33.16|584|
+|192.168.38.77|743|
+|192.168.51.205|610|
+|192.168.52.153|541|
+|192.168.62.176|582|
+
+### 2. Query IPs that exceed hourly threshold
+Date = 2017-01-01 13:00:00; Duration = hourly; Threshold = 200. 
+Query that calls store procedure:
+
+    CALL hourly_passed_threshold_ips('2017-01-01 15:00:00', 200);
+Result:
+|ip|hits  |
+|--|--|
+|192.168.106.134|232|
+|192.168.11.231|211|
+
+### 3. Query to find requests made by a given IP
+IP = 192.168.160.64
+Query that perform such objective:
+
+    SELECT * FROM tbl_logs AS a WHERE a.ip = '192.168.160.64'
