@@ -122,6 +122,7 @@ Query that calls store procedure:
 
     CALL hourly_passed_threshold_ips('2017-01-01 15:00:00', 200);
 Result:
+
 |ip|hits  |
 |--|--|
 |192.168.106.134|232|
