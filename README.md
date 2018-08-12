@@ -97,6 +97,7 @@ Query that calls store procedure:
 
     CALL daily_passed_threshold_ips('2017-01-01 00:00:00', 500);
 Result:
+
 | ip              | hits |
 | --------------- | ---- |
 | 192.168.102.136 | 513  |
