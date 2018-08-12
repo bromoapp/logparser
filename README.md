@@ -1,5 +1,7 @@
+
 # Log Parser
 *NOTE: This project is created in Windows 10 environment.*
+
 ## 1. Prerequisites
 - Already have MySql server instance running in your local PC/Laptop,
 - Already have MySql desktop client application e.g. HeidiSQL installed (optional),
@@ -17,11 +19,20 @@
 
 ## 3. To Load the sample Log file to DB
 
-The sample log file is located in **src/test/resources** folder, called: **access.log**. To load the content of this file to the database, we can execute below command from within **target** folder.
+**Syntax** for loading **.log** file to database:
+> java -cp "parser-x.x.x-jar-with-dependencies.jar" com.ef.Parser --accesslog=[/path/to/file/filename.log]
+
+To use the above syntax against our sample log file, which is located in **src/test/resources** folder.  We can execute command below from within **target** folder.
 > java -cp "parser-0.0.1-jar-with-dependencies.jar" com.ef.Parser --accesslog=../src/test/resources/access.log
 
-After executing the above command, use your MySql desktop client application (I use **HeidiSQL**), and see that all records in the sample log file already loaded into **tbl_logs** table.
+After executing the above command, use your MySql desktop client application (e.g.  **HeidiSQL**), and see that all records in the sample log file already loaded into **tbl_logs** table.
 
 ## 4. To Block IPs that exceed daily Threshold
 
-The file explorer is accessible using the button in left corner of the navigation bar. You can create a new file by clicking the **New file** button in the file explorer. You can also create folders by clicking the **New folder** button.
+Syntax for blocking IPs that exceed daily threshold:
+> java -cp "parser-0.0.1-jar-with-dependencies.jar" com.ef.Parser --startDate=[yyyy-MM-dd.HH:mm:ss] --duration=[daily|hourly] --threshold=[integer_value]
+
+To use the above syntax against loaded sample data in database, we can execute below command from within **target** folder.
+> java -cp "parser-0.0.1-jar-with-dependencies.jar" com.ef.Parser --startDate=2017-01-01.15:00:00 --duration=daily --threshold=500
+
+After executing the above command, use your MySql desktop client application (e.g. **HeidiSQL**), and see that all blocked IPs that exceed daily threshold (500) are already inserted into **tbl_blocked** table.
