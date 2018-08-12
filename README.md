@@ -16,4 +16,6 @@
 ## 3. How to Load the sample Log file to DB
 
 The sample log file is located in **src/test/resources** folder, called: **access.log**. To load the content of this file is by executing below command, from within **target** folder.
-> java 
+> java -cp "parser-0.0.1-jar-with-dependencies.jar" com.ef.Parser --accesslog=../src/test/resources/access.log
+
+After executing the above command, you can open your MySql desktop client application (I use **HeidiSQL**), and see that all records in the sample log file already loaded into **tbl_logs** table.
