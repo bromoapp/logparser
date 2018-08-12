@@ -19,6 +19,16 @@ ENGINE=InnoDB;
 CREATE PROCEDURE IF NOT EXISTS `daily_passed_threshold_ips`(IN `in_date` VARCHAR(50), IN `in_threshold` INT)
 BEGIN
 	SELECT src.ip, src.hits FROM (
-		SELECT DISTINCT(a.ip) AS 'ip', COUNT(*) AS 'hits' FROM tbl_logs AS a WHERE DATE(a.`time`) = in_date GROUP BY a.ip
+		SELECT DISTINCT(a.ip) AS 'ip', COUNT(*) AS 'hits' FROM tbl_logs AS a 
+		WHERE DATE(a.`time`) = in_date GROUP BY a.ip
+	) AS src WHERE src.hits >= in_threshold;
+END;
+
+CREATE PROCEDURE IF NOT EXISTS `hourly_passed_threshold_ips`(IN `in_time` VARCHAR(50), IN `in_threshold` INT)
+BEGIN
+	SELECT src.ip, src.hits FROM (
+		SELECT DISTINCT(a.ip) AS 'ip', COUNT(*) AS 'hits' FROM tbl_logs AS a 
+		WHERE a.`time` >= in_time AND a.`time` <= DATE_ADD(in_time, INTERVAL 1 HOUR) 
+		GROUP BY a.ip
 	) AS src WHERE src.hits >= in_threshold;
 END;

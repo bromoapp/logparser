@@ -1,4 +1,5 @@
 
+
 # Log Parser
 *NOTE: This project is created and tested in Windows 10 environment.*
 
@@ -25,9 +26,9 @@
 To use the above syntax against our sample log file, which is located in **src/test/resources** folder.  We can execute command below from within **target** folder.
 > java -cp "parser-0.0.1-jar-with-dependencies.jar" com.ef.Parser --accesslog=../src/test/resources/access.log
 
-After executing the above command, use your MySql desktop client application (e.g.  **HeidiSQL**), and see that all records in the sample log file already loaded into **tbl_logs** table.
+After executing the above command, use your MySql desktop client application (e.g.  **HeidiSQL**), and check that all records from the **access.log** file already loaded into **tbl_logs** table (116,484 records).
 
-## To Block IPs that exceed daily Threshold
+## To Block IPs that exceed Daily threshold
 
 Syntax for blocking IPs that exceed daily threshold:
 > java -cp "parser-0.0.1-jar-with-dependencies.jar" com.ef.Parser --startDate=[yyyy-MM-dd.HH:mm:ss] --duration=[daily|hourly] --threshold=[integer_value]
@@ -35,4 +36,14 @@ Syntax for blocking IPs that exceed daily threshold:
 To use the above syntax against loaded sample data in database, we can execute below command from within **target** folder.
 > java -cp "parser-0.0.1-jar-with-dependencies.jar" com.ef.Parser --startDate=2017-01-01.15:00:00 --duration=daily --threshold=500
 
-After executing the above command, use your MySql desktop client application (e.g. **HeidiSQL**), and see that all blocked IPs that exceed daily threshold (500) are already inserted into **tbl_blocked** table.
+After executing the above command, use your MySql desktop client application (e.g. **HeidiSQL**), and check that all blocked IPs that exceed **daily threshold** (500) are already inserted into **tbl_blocked** table (15 records).
+
+## To Block IPs that exceed Hourly threshold
+
+Syntax for blocking IPs that exceed daily threshold:
+> java -cp "parser-0.0.1-jar-with-dependencies.jar" com.ef.Parser --startDate=[yyyy-MM-dd.HH:mm:ss] --duration=[daily|hourly] --threshold=[integer_value]
+
+To use the above syntax against loaded sample data in database, we can execute below command from within **target** folder.
+> java -cp "parser-0.0.1-jar-with-dependencies.jar" com.ef.Parser --startDate=2017-01-01.15:00:00 --duration=hourly --threshold=200
+
+After executing the above command, use your MySql desktop client application (e.g. **HeidiSQL**), and check that all blocked IPs that exceed **hourly threshold** (200) are already inserted into **tbl_blocked** table (+2 records).

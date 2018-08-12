@@ -86,7 +86,29 @@ public class Parser {
 	 * Block IPs by hourly threshold
 	 */
 	public void blockIPsByHourly(Connection conn, String datetime, int threshold) throws Exception {
+		/**
+		 * 1. Perform store procedure call
+		 * 2. Insert each record into tbl_blocked
+		 */
+		String callSql = "CALL `hourly_passed_threshold_ips`(?, ?)";
+		CallableStatement callStmt = conn.prepareCall(callSql);
+		callStmt.setString(1, datetime);
+		callStmt.setInt(2, threshold);
+		ResultSet rs = callStmt.executeQuery();
 		
+		String writeSql = "INSERT INTO tbl_blocked(`time`, ip, hits, threshold, duration) VALUES(?,?,?,?,?)";
+		PreparedStatement pstmt2 = conn.prepareStatement(writeSql);
+		while(rs.next()) {
+			String ip = rs.getString(1);
+			System.out.println(ip);
+			pstmt2.setString(1, sdf.format(new Date()));
+			pstmt2.setString(2, ip);
+			pstmt2.setLong(3, rs.getLong(2));
+			pstmt2.setLong(4, threshold);
+			pstmt2.setString(5, Duration.hourly.name());
+			pstmt2.addBatch();
+		}
+		pstmt2.executeBatch();
 	}
 	
 	/**
