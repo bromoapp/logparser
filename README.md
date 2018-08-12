@@ -1,1 +1,3 @@
-# logparser
+#  parser
+
+Add instructions for project developers here.
