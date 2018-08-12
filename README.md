@@ -1,6 +1,6 @@
 
 # Log Parser
-*NOTE: This project is created in Windows 10 environment.*
+*NOTE: This project is created and tested in Windows 10 environment.*
 
 ## Prerequisites
 - Already have MySql server instance running in your local PC/Laptop,
