@@ -118,6 +118,7 @@ Result:
 
 ### 2. Query IPs that exceed hourly threshold
 Date = 2017-01-01 13:00:00; Duration = hourly; Threshold = 200. 
+
 Query that calls store procedure:
 
     CALL hourly_passed_threshold_ips('2017-01-01 15:00:00', 200);
@@ -130,6 +131,7 @@ Result:
 
 ### 3. Query to find requests made by a given IP
 IP = 192.168.160.64
+
 Query that perform such objective:
 
     SELECT * FROM tbl_logs AS a WHERE a.ip = '192.168.160.64'
