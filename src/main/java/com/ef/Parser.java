@@ -124,7 +124,7 @@ public class Parser {
 	public void persistsLogToDb(String path, Connection conn) throws Exception {
 		/************************************************************
 		 * 1. Open log file
-		 * 2. Parsing each line
+		 * 2. Parses each line
 		 * 3. Persists each line to database
 		 ************************************************************/
 		FileInputStream is = null;
@@ -185,15 +185,13 @@ public class Parser {
 	 * Validates input arguments
 	 */
 	public boolean validateParams(Map<String, String> params) {
-		switch (params.size()) {
-		case 1:
+		if (params.size() == 1) {
 			if (params.containsKey(Key.ACCESS_LOG)) {
 				if (params.get(Key.ACCESS_LOG).length() > 0) {
 					return true;
 				}
 			}
-			break;
-		case 3:
+		} else if (params.size() == 3) {
 			if (params.containsKey(Key.START_DATE) && params.containsKey(Key.DURATION)
 					&& params.containsKey(Key.THRESHOLD)) {
 				try {
@@ -209,7 +207,8 @@ public class Parser {
 				} catch (Exception e) {
 				}
 			}
-			break;
+		} else {
+			
 		}
 		return false;
 	}
